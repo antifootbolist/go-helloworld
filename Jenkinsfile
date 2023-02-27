@@ -25,7 +25,7 @@ pipeline {
 
         stage('Deploy') {
             environment {
-                DOCKER_HOST = 'tcp://$PROD_IP:2376'
+                DOCKER_HOST = "tcp://$PROD_IP:2376"
             }
             steps {
                 // Stop previous version of app
