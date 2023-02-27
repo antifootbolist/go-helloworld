@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PROD_IP = '51.250.71.203'
+        PROD_IP = '51.250.71.203'   // Need to change every time
         APP_PORT = '80'
         APP_NAME = 'go-hw-app'
         DOCKER_HUB_USER = 'antifootbolist'
