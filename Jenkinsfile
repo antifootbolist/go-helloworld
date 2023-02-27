@@ -4,6 +4,7 @@ pipeline {
     environment {
         PROD_IP = '51.250.71.203'
         APP_PORT = '80'
+        APP_NAME = 'my-go-app'
     }
 
     stages {
@@ -20,7 +21,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh 'docker build -t my-go-app .'
+                sh 'docker build -t ${APP_NAME} .'
             }
         }
 
@@ -33,9 +34,9 @@ pipeline {
                 DOCKER_TLS_VERIFY = '0'
             }
             steps {
-                sh 'docker stop my-go-app || true'
-                sh 'docker rm my-go-app || true'
-                sh 'docker run -d --name my-go-app -p ${APP_PORT}:8080 my-go-app'
+                sh 'docker stop ${APP_NAME} || true'
+                sh 'docker rm ${APP_NAME} || true'
+                sh 'docker run -d --name ${APP_NAME} -p ${APP_PORT}:8080 ${APP_NAME}'
             }
         }
     }
