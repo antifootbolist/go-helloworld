@@ -8,7 +8,7 @@ WORKDIR /app
 COPY app/main.go .
 
 # Compile the Go application
-RUN go build -o app-hw .
+RUN go build -o app-hw main.go
 
 # Set the command to run the Go application
 CMD ["./app-hw"]
