@@ -58,5 +58,7 @@ pipeline {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run --restart always --name ${APP_NAME} -p ${APP_PORT}:8080 -d ${DOCKER_HUB_USER}/${APP_NAME}:${env.BUILD_NUMBER}\""
                     }
                 }
+            }
+        }
     }
 }
