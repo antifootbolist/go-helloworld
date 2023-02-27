@@ -17,9 +17,6 @@ pipeline {
         }
 
         stage('Build') {
-            when {
-                branch 'main'
-            }
             steps {
                 // Build docker image on worker node
                 sh 'docker build -t ${APP_NAME} .'
@@ -27,9 +24,6 @@ pipeline {
         }
 
         stage('Deploy') {
-            when {
-                branch 'main'
-            }
             environment {
                 DOCKER_HOST = 'tcp://${PROD_IP}:2376'
                 DOCKER_TLS_VERIFY = '0'
