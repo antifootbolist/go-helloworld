@@ -5,7 +5,7 @@ FROM golang:latest
 WORKDIR /app
 
 # Copy the Go application source code to the container
-COPY main.go .
+COPY app/main.go .
 
 # Compile the Go application
 RUN go build -o hello-world

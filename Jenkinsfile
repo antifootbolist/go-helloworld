@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'PROD_IP', description: 'IP address of a production server')
-        string(name: 'PROD_PORT', description: 'Port number of app on a production server')
+    environment {
+        PROD_IP = '51.250.71.203'
+        APP_PORT = '80'
     }
 
     stages {
@@ -16,6 +16,9 @@ pipeline {
         }
 
         stage('Build') {
+            when {
+                branch 'main'
+            }
             steps {
                 sh 'docker build -t my-go-app .'
             }
@@ -23,7 +26,7 @@ pipeline {
 
         stage('Deploy') {
             when {
-                branch 'master'
+                branch 'main'
             }
             environment {
                 DOCKER_HOST = 'tcp://${PROD_IP}:2376'
@@ -32,7 +35,7 @@ pipeline {
             steps {
                 sh 'docker stop my-go-app || true'
                 sh 'docker rm my-go-app || true'
-                sh 'docker run -d --name my-go-app -p ${PROD_PORT}:8080 my-go-app'
+                sh 'docker run -d --name my-go-app -p ${APP_PORT}:8080 my-go-app'
             }
         }
     }
