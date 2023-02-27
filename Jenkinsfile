@@ -16,9 +16,6 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
                     app = docker.build("${DOCKER_HUB_USER}/${APP_NAME}")
@@ -29,9 +26,6 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
@@ -42,9 +36,6 @@ pipeline {
             }
         }
         stage ('Deploy to Prod') {
-            when {
-                branch 'main'
-            }
             steps {
                 withCredentials ([usernamePassword(credentialsId: 'prod_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
