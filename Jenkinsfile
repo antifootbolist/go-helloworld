@@ -10,7 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the source code from GitHub
-                git credentialsId: 'antifootbolist-github-access-token', url: 'https://github.com/antifootbolist/go-helloworld.git'
+                git url: 'https://github.com/antifootbolist/go-helloworld.git',
+                    branch: 'main'
             }
         }
 
