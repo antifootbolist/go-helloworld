@@ -19,22 +19,22 @@ pipeline {
         stage('Build') {
             steps {
                 // Build docker image on worker node
-                sh 'docker build -t ${APP_NAME} .'
+                sh 'docker build -t $APP_NAME .'
             }
         }
 
         stage('Deploy') {
             environment {
-                DOCKER_HOST = 'tcp://${PROD_IP}:2376'
+                DOCKER_HOST = 'tcp://$PROD_IP:2376'
                 DOCKER_TLS_VERIFY = '0'
             }
             steps {
                 // Stop previous version of app
-                sh 'docker stop ${APP_NAME} || true'
+                sh 'docker stop $APP_NAME || true'
                 // Remove previous version of container image
-                sh 'docker rm ${APP_NAME} || true'
+                sh 'docker rm $APP_NAME || true'
                 // Run new version of app
-                sh 'docker run -d --name ${APP_NAME} -p ${APP_PORT}:8080 ${APP_NAME}'
+                sh 'docker run -d --name $APP_NAME -p $APP_PORT:8080 $APP_NAME'
             }
         }
     }
