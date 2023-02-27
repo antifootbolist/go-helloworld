@@ -1,5 +1,5 @@
 # Use the official Go image as the base image
-FROM golang:latest
+FROM golang:alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY app/main.go .
 
 # Compile the Go application
-RUN go build -o hello-world
+RUN go build -o app-hw .
 
 # Set the command to run the Go application
-CMD ["./hello-world"]
+CMD ["./app-hw"]
