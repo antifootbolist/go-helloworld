@@ -62,7 +62,7 @@ pipeline {
                             } catch (err) {
                                 echo: 'caught error: $err'
                             }
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run -d --restart always --name ${app_name} --network ${APP_NET} -p ${app_port}:8080 ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run -d --restart always --name ${app_name} --network ${APP_NET} -p ${app_port}:${app_port} ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
                         }
                     }
                 }
