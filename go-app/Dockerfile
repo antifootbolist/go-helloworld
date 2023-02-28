@@ -5,10 +5,10 @@ FROM golang:alpine
 WORKDIR /app
 
 # Copy the Go application source code to the container
-COPY app/main.go .
+COPY main.go .
 
 # Compile the Go application
-RUN go build -o app-hw main.go
+RUN go build -o go-app main.go
 
 # Set the command to run the Go application
-CMD ["./app-hw"]
+CMD ["./go-app"]
