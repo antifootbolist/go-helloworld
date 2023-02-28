@@ -10,8 +10,8 @@ COPY py-app/* .
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 to the Docker network
-EXPOSE 8080
+# Expose port 5000 to the Docker network
+EXPOSE 5000
 
 # Start the Flask app when the container starts
-CMD ["python", "main.py", "--port=8080"]
+CMD ["python", "main.py"]

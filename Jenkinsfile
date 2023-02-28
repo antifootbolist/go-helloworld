@@ -3,12 +3,12 @@ pipeline {
 
     environment {
         // Need to change
-        PROD_IP = '51.250.71.203'          
-        GO_APP_PORT = '8081'               
-        GO_APP_NAME = 'go-app'          
-        PY_APP_PORT = '8082'               
-        PY_APP_NAME = 'py-app'          
-        DOCKER_HUB_USER = 'antifootbolist' 
+        PROD_IP = '51.250.71.203'
+        GO_APP_PORT = '8080'
+        GO_APP_NAME = 'go-app'
+        PY_APP_PORT = '5000'
+        PY_APP_NAME = 'py-app'
+        DOCKER_HUB_USER = 'antifootbolist'
     }
 
     stages {
@@ -24,9 +24,6 @@ pipeline {
                     def app_names = [env.GO_APP_NAME, env.PY_APP_NAME]
                     for (app_name in app_names) {
                         app = docker.build("${DOCKER_HUB_USER}/${app_name}", "-f ${app_name}/Dockerfile .")
-                        app.inside {
-                            sh 'echo $(curl localhost:8080)'
-                        }
                         // Don't forget to create docker_hub_login credential to autorize on Docker Hub
                         docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
                             app.push("${env.BUILD_NUMBER}")
@@ -55,7 +52,7 @@ pipeline {
                             } catch (err) {
                                 echo: 'caught error: $err'
                             }
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run --restart always --name ${app_name} -p ${app_port}:8080 -d ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run --restart always --name ${app_name} -p ${app_port}:${app_port} -d ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
                         }
                     }
                 }
