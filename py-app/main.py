@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
+@app.route('/python')
 def hello_world():
     return "Hello World from Python App\n"
 
