@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        PROD_IP = '51.250.71.203'   // Need to change every time
-        APP_PORT = '80'
+        PROD_IP = '51.250.71.203'          // Need to change
+        APP_PORT = '8080'                  // Need to change
         APP_NAME = 'go-hw-app'
-        DOCKER_HUB_USER = 'antifootbolist'
+        DOCKER_HUB_USER = 'antifootbolist' //Need to change
     }
 
     stages {
@@ -28,6 +28,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    // Don't forget to create docker_hub_login credential to autorize on Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
@@ -37,6 +38,7 @@ pipeline {
         }
         stage ('Deploy to Prod') {
             steps {
+                // Don't forget to create prod_login credential to autorize on Prod server
                 withCredentials ([usernamePassword(credentialsId: 'prod_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker pull ${DOCKER_HUB_USER}/${APP_NAME}:${env.BUILD_NUMBER}\""

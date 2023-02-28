@@ -8,11 +8,21 @@ The following files are in this repo:
 ```Jenkinsfile``` - Simple pipeline to implement CI/CD on Jenkins   
 
 ## How to launch this app   
+
+### From VM
+1. Pull source code from repository:   
+```git pull https://github.com/antifootbolist/go-helloworld.git```
+2. Run the application:   
+```go run filename.go```
+4. Check a status of the application:  
+```curl -X GET http://localhost:8080```
+
+### Inside Docker container
 1. Pull source code from repository:   
 ```git pull https://github.com/antifootbolist/go-helloworld.git```
 2. Execute docker image build by using Dockerfile from repo:   
-```docker build -t go-hw-app -f ./Dockerfile```
+```docker build -t go-hw-app .```
 3. Run docker container:  
-```docker run --name go-hw-app -p 8080:8080 -d```
+```docker run -d --name go-hw-app -p 8080:8080```
 4. Check a status of the application:  
 ```curl -X GET http://localhost:8080```
