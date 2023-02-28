@@ -4,9 +4,9 @@ pipeline {
     environment {
         // Need to change
         PROD_IP = '51.250.71.203'
-        GO_APP_PORT = '8080'
+        GO_APP_PORT = '8081'
         GO_APP_NAME = 'go-app'
-        PY_APP_PORT = '5000'
+        PY_APP_PORT = '8082'
         PY_APP_NAME = 'py-app'
         DOCKER_HUB_USER = 'antifootbolist'
     }
@@ -52,7 +52,7 @@ pipeline {
                             } catch (err) {
                                 echo: 'caught error: $err'
                             }
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run --restart always --name ${app_name} -p ${app_port}:${app_port} -d ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run --restart always --name ${app_name} -p ${app_port}:8080 -d ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
                         }
                     }
                 }
