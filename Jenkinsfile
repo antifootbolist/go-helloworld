@@ -62,7 +62,11 @@ pipeline {
                             } catch (err) {
                                 echo: 'caught error: $err'
                             }
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run -d --restart always --name ${app_name} --network ${APP_NET} -p ${app_port}:8080 ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            if (app_name == env.NGINX_NAME) {
+                                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run -d --restart always --name ${app_name} --network ${APP_NET} -p ${app_port}:80 ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            } else {
+                                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker run -d --restart always --name ${app_name} --network ${APP_NET} -p ${app_port}:8080 ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
+                            }
                         }
                     }
                 }
