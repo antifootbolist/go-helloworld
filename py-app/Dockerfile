@@ -5,7 +5,7 @@ FROM python:3.9-slim-buster
 WORKDIR /app
 
 # Copy the application content into the container at /app
-COPY ./* .
+COPY py-app/* .
 
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
