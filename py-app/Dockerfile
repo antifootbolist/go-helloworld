@@ -1,5 +1,5 @@
 # Use the official Python image as the parent image
-FROM python:3.9-slim-buster
+FROM python:latest
 
 # Set the working directory to /app
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY py-app/* .
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 5000 for the Flask app to listen on
+# Expose port 8080 for the Flask app to listen on
 EXPOSE 8080
 
 # Start the Flask app when the container starts
