@@ -10,8 +10,5 @@ COPY py-app/* .
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 for the Flask app to listen on
-EXPOSE 8080
-
 # Start the Flask app when the container starts
 CMD ["python", "main.py"]
