@@ -45,10 +45,12 @@ pipeline {
                             if (app_name == env.GO_APP_NAME) {
                                 sh 'echo "Deploying Go application"'
                                 app_port = env.GO_APP_PORT
-                            } elif (app_name == env.PY_APP_NAME) {
+                            }
+                            if (app_name == env.PY_APP_NAME) {
                                 sh 'echo "Deploying Python application"'
                                 app_port = env.PY_APP_PORT
-                            } elif (app_name == env.NGINX_NAME) {
+                            }
+                            if (app_name == env.NGINX_NAME) {
                                 sh 'echo "Deploying Nginx Web server"'
                                 app_port = env.NGINX_PORT
                             }
