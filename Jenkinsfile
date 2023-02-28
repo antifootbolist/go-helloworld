@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PROD_IP = '51.250.71.203'          // Need to change
-        APP_PORT = '8080'                  // Need to change
+        APP_PORT = '8081'                  // Need to change
         APP_NAME = 'go-hw-app'
         DOCKER_HUB_USER = 'antifootbolist' //Need to change
     }
