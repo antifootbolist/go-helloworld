@@ -21,7 +21,7 @@ pipeline {
         stage('Build and Push Docker Images') {
             steps {
                 script {
-                    def app_names = ['$GO_APP_NAME', '$PY_APP_NAME']
+                    def app_names = [env.GO_APP_NAME, env.PY_APP_NAME]
                     for (app_name in app_names) {
                         app = docker.build("${DOCKER_HUB_USER}/${app_name}", "-f ${app_name}/Dockerfile .")
                         app.inside {
@@ -41,12 +41,12 @@ pipeline {
                 // Don't forget to create prod_login credential to autorize on Prod server
                 withCredentials ([usernamePassword(credentialsId: 'prod_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
-                        def app_names = ['$GO_APP_NAME', '$PY_APP_NAME']
+                        def app_names = [env.GO_APP_NAME, env.PY_APP_NAME]
                         for (app_name in app_names) {
-                            if (app_name == '$GO_APP_NAME') {
-                                app_port = '$GO_APP_PORT'
+                            if (app_name == env.GO_APP_NAME) {
+                                app_port = env.GO_APP_PORT
                             } else {
-                                app_port = '$PY_APP_PORT'
+                                app_port = env.PY_APP_PORT
                             }
                             sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$PROD_IP \"docker pull ${DOCKER_HUB_USER}/${app_name}:${env.BUILD_NUMBER}\""
                             try {
